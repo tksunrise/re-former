@@ -1,4 +1,5 @@
 import path from 'path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default () => (
     {
@@ -6,18 +7,7 @@ export default () => (
         entry: path.join(__dirname, "src/index"),
         output: {
             path: path.join(__dirname, "dist"),
-            filename: "reformer.[name].js",
-            library: ["reformer", "[name]"],
-            libraryTarget: 'umd',
-            globalObject: 'this',
-        },
-        externals: {
-            'react': {
-                commonjs: 'react',
-                commonjs2: 'react',
-                amd: 'react',
-                root: 'react'
-            }
+            filename: "reformer.js",
         },
         module: {
             rules: [
@@ -28,5 +18,11 @@ export default () => (
                 }
             ]
         },
+        plugins: [
+            new HtmlWebpackPlugin({
+                template: path.join(__dirname, "src/index.tpl.html"),
+                inject: true
+            })
+        ]
     }
 );

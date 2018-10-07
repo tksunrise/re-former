@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack",
+    "build:examples": "webpack --config webpack.config.examples.babel.js",
     "lint": "eslint src/*.js"
   },
   "devDependencies": {

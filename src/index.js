@@ -4,21 +4,14 @@ import ReactDOM from 'react-dom';
 import improve from './improve';
 import Form from './Form';
 import Field from './Field';
-import ErrorMesage from './ErrorMesage';
+import ErrorMesage from './ErrorMessage';
 import ErrorList from './ErrorList';
 import Submit from './Submit';
-
-const store = {
-    email: '',
-    password: '',
-    password2: '',
-    postCode: ''
-};
 
 const onSubmit = (e, fields) => console.log('form is sending');
 
 const validators = {
-    "required": (value, name, fields) => !value ? `Pole ${name} nie może być puste`,
+    "required": (value, name, fields) => !value ? `Pole ${name} nie może być puste` : null,
     "email": (value, name, fields) => {
         const regexp = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
         return regexp.test(String(value).toLowerCase()) ? `Adres email ${value} jest niepoprawny` : null;
@@ -30,7 +23,7 @@ const validators = {
     },
 };
 
-let ExampleForm = (props) => (
+/*let ExampleForm = (props) => (
     <Form method="POST" target="/api/user" errorClass="constraint-error" {...props}>
         <ErrorList className="error-list"/>
         <Field rules="email,required" includeError>
@@ -53,8 +46,15 @@ let ExampleForm = (props) => (
             <input type="submit"/>
         </Submit>
     </Form>
+);*/
+
+let ExampleForm = (props) => (
+    <Form method="POST" target="/api/user" errorClass="constraint-error" {...props}>
+        <Field rules="email,required" includeError>
+            <input type="email" name="email" />
+        </Field>
+    </Form>
 );
 
 ExampleForm = improve(onSubmit, validators)(ExampleForm);
-
-ReactDOM.render(<Example store={store}/>, document.getElementById('root'));
+ReactDOM.render(<ExampleForm/>, document.getElementById('root'));
