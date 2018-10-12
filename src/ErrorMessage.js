@@ -1,7 +1,7 @@
 import React from 'react';
 import ContextForm from './ContextForm';
 
-const ErrorMesage = ({className, contextFormData, htmlFor}) => {console.log(htmlFor);
+const ErrorMesageComponent = ({className, contextFormData, htmlFor}) => {console.log(htmlFor);
     if(!(htmlFor in contextFormData.fields)) {
         return null;
     }
@@ -19,11 +19,11 @@ const ErrorMesage = ({className, contextFormData, htmlFor}) => {console.log(html
     }
 };
 
-const ErrorMesageWithContext = props => (
+const ErrorMessage = props => (
     <ContextForm.Consumer>
-        {contextFormData => <ErrorMesage {...props} contextFormData={contextFormData}/>}
+        {contextFormData => <ErrorMesageComponent {...props} contextFormData={contextFormData}/>}
     </ContextForm.Consumer>
 );
 
-export default ErrorMesageWithContext;
+export default ErrorMessage;
 

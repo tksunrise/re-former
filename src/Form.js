@@ -43,7 +43,7 @@ class Form extends React.PureComponent {
             value,
             rules,
             edited: false,
-            errors: ['Nie działa'],
+            errors: ['Nie działa '+name],
             errorClass: this.errorClass
         }
     }

@@ -52,6 +52,14 @@ let ExampleForm = (props) => (
     <Form method="POST" target="/api/user" errorClass="constraint-error" {...props}>
         <Field rules="email,required" includeError>
             <input type="email" name="email" />
+            <ErrorMesage className="error-message" htmlFor="surname" />
+        </Field>
+        <Field rules="email,required">
+            <input type="text" name="name" />
+            <ErrorMesage className="error-message" />
+        </Field>
+        <Field rules="email,required">
+            <input type="text" name="surname" />
         </Field>
     </Form>
 );
