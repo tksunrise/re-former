@@ -13,8 +13,8 @@ const onSubmit = (e, fields) => console.log('form is sending');
 const validators = {
     "required": (value, name, fields) => !value ? `Pole ${name} nie może być puste` : null,
     "email": (value, name, fields) => {
-        const regexp = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-        return regexp.test(String(value).toLowerCase()) ? `Adres email ${value} jest niepoprawny` : null;
+        const regexp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return !regexp.test(String(value).toLowerCase()) ? `Adres email ${value} jest niepoprawny` : null;
     },
     "samePassword": (value, name, fields) => value !== fields.password.value ? "Podane hasła nie są identyczne" : null,
     "postcode": (value, name, fields) => {
@@ -50,17 +50,20 @@ const validators = {
 
 let ExampleForm = (props) => (
     <Form method="POST" target="/api/user" errorClass="constraint-error" {...props}>
+        <ErrorList/>
+        <hr />
         <Field rules="email,required" includeError>
-            <input type="email" name="email" />
+            <input type="text" name="email" />
             <ErrorMesage className="error-message" htmlFor="surname" />
         </Field>
-        <Field rules="email,required">
+        <Field rules="required">
             <input type="text" name="name" />
             <ErrorMesage className="error-message" />
         </Field>
-        <Field rules="email,required">
+        <Field rules={['required', (value, name, fields) => value === 'ok' ? "bad!!" : null]}>
             <input type="text" name="surname" />
         </Field>
+        <Submit>Wyślij</Submit>
     </Form>
 );
 

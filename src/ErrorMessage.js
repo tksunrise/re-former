@@ -1,19 +1,20 @@
 import React from 'react';
 import ContextForm from './ContextForm';
 
-const ErrorMesageComponent = ({className, contextFormData, htmlFor}) => {console.log(htmlFor);
+const ErrorMesageComponent = ({className, contextFormData, htmlFor}) => {
     if(!(htmlFor in contextFormData.fields)) {
         return null;
     }
+    const appliedClassName = typeof className !== 'undefined' ? className : 'error-message';
     switch (contextFormData.fields[htmlFor].errors.length) {
         case 0:
             return null;
         case 1:
-            return <div className={className}>{contextFormData.fields[htmlFor].errors[0]}</div>;
+            return <div className={appliedClassName}>{contextFormData.fields[htmlFor].errors[0]}</div>;
         default:
-            return <div className={className}>
+            return <div className={appliedClassName}>
                 <ul>
-                    { contextFormData.fields[htmlFor].errors.map(error => <li>{error}</li>) }
+                    { contextFormData.fields[htmlFor].errors.map((error, index) => <li key={index}>{error}</li>) }
                 </ul>
             </div>;
     }

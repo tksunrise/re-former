@@ -33,7 +33,7 @@ class Field extends React.PureComponent {
                     return React.cloneElement(child, errorProps);
                 }
                 const {name, value} = child.props;
-                const inputChild = React.cloneElement(child, {
+                const childProps = {
                     value: (typeof value === "undefined" || value === null) ? ((name in contextFormData.fields) ? contextFormData.fields[name].value : '') : value,
                     onChange: (e) => {
                         if(!contextFormData.fields[name].edited) {
@@ -44,7 +44,11 @@ class Field extends React.PureComponent {
                             child.props.onChange(e);
                         }
                     }
-                });
+                };
+                if(contextFormData.hasError(this.state.name)) {
+                    childProps.className = contextFormData.errorClass;
+                }
+                const inputChild = React.cloneElement(child, childProps);
                 if(!!includeError && name in contextFormData.fields && !!contextFormData.fields[name].errors.length) {
                     const errorMessage = <ErrorMessage clasName="error-message" htmlFor={name}/>;
                     return [inputChild, errorMessage];
